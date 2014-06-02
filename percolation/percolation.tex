@@ -7,15 +7,42 @@
 
 \section{Introduction}
 
+Percolation deals with the properties of clusters created by some
+probabilistic means. Generally, at some threshold an infinite cluster
+will form that spans the lattice and we consider this a phase transition.
+While the process that generates this cluster is simply stated, its properties
+are quite rich, resisting analytic treatment and exhbiting complex phenomena
+such as multifractal scaling. The marriage of conceptual simplicity and
+complex behavior makes percolation a popular introduction to phase transitions,
+and the generality of the model makes it applicable to a wide variety of physical
+problems from superconductivity to forest fires.
+
+
+This coverage aims to give a wide introduction to percolation theory, focusing
+on grounding the problem as a conduction transition in a random resistor network.
+We will follow our coverage of the Ising model, first introducing percolation and
+giving brief attention to it's variants and correspondence to physical transitions.
+Then we will
+review exact solutions on simple lattices, namely in one dimension and the Bethe
+lattice.  Next we will review mean field theory techniques away from the transition
+and then scaling relations derivable from assumptions about the form of the
+infinite cluster.  Finally, we will review applications of renormalization, and give
+a summary of extensions to more complex examples.
+
 \subsection{The Basic Percolation Problem}
 
 Consider a finite cubic lattice where neighboring sites are not yet connected.
-At every potential edge, place a bond with a probability or \textbf{concentration}
-$p$. As we increase the concentration from 0, clusters that connect from the
-top of the lattice to the bottom will begin to form.  As the size of the lattice
+At every potential edge, place a bond with a probability, or \textbf{concentration}
+$p$. As we increase this concentration from 0, at some point instantiations of the
+lattice will contain clusters that connect from the top to the bottom and we say
+the lattic \textbf{percolates}.  As the size of the lattice
 increases, the point at which a percolating cluster forms becomes more sharply
 defined and in the infinite limit we can define a critical concentration
-$p_c$
+$p_c$ beyond which an infinite cluster exists. This suggests an order parameter
+$P(p)$ which we call the \textbf{power} or \textbf{percolation probability}
+
+If we consider these links to be resistors the problem can be framed as
+a transition in which the lattice becomes conductive
 
 \subsubsection{Bond vs. Site Percolation}
 \subsection{Critical Exponents}
@@ -24,8 +51,8 @@ $p_c$
 \subsection{One-Dimension}
 \subsection{Bethe Lattice}
 \section{Mean-Field Techniques}
-\subsection{Effective Medium Theory}
 \subsection{Mean Field Theory}
+\subsection{Effective Medium Theory}
 \section{Scaling Relations}
 \section{Renormalization}
 \section{Extensions}
