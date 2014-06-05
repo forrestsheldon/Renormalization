@@ -48,8 +48,12 @@ Depending on the physical problem we are interested in, we may choose to frame
 it in terms of sites or bonds but the results given by either will be closely
 related.  Here we will focus on bond percolation with the intention of relating our
 results to the random resistor network.  This coverage is adapted from \cite{stauffer94}
-\cite{kristenson} which both cover site percolation.  Results here have been
+\cite{christensen02} which both cover site percolation.  Results here have been
 rederived for bond percolation following their arguments.
+
+%==================================================================================
+% IMPORTANT QUANTITIES AND EXPONENTS
+%==================================================================================
 
 \subsection{Important Quantities and Exponents}
 
@@ -83,51 +87,131 @@ structure.  Currently accepted values may be viewed in Table \ref{tab:perc_thres
   \end{tabular}
   \caption{Percolation thresholds for various lattices.  Note that within a dimension,
            the threshold decreases with increasing coordination number.  This is an
-           abridged version of a table found in KRISTENSON.}
+           abridged version of a table found in \cite{christensen02}.}
   \label{tab:perc_thresh}
 \end{table}
+
+\item[P(p)] The \textbf{strength} of the infinite cluster gives the probability that
+an arbirary bond is connected to the infinite cluster.  As such, $P$ is 0 below
+the percolation threshold and goes to 1 as $p\to 1$.  In most lattices, at $p_c$
+$P$ increases continuously from 0 and so is analogous to our order parameter for a second
+order phase transition.  This allows us to define the critical exponent $\beta$,
+\[ P(p) \propto (p - p_c)^{\beta} \ \text{as}\ p\to p_c^+ \]
 
 \item[$n_s(p)$] The \textbf{cluster number distribution} gives the average number of
 clusters of size $s$ per lattice site (such that in a lattice of size $N$ there will be on
 average $Nn_s(p)$ clusters of size $s$ at concentration $p$).  As all bonds must belong
-to a cluster of some size (at least below the percolation threshold) we have
-\(\sum_s sn_s(p) = p\). This quantity $sn_s(p)$ is somewhat
+to a cluster of some size, we have,
+\begin{align*}
+\sum_s sn_s(p) = p,&\quad p<p_c \\
+\sum_s sn_s(p)+ P(p) = p,&\quad p>p_c \\
+\end{align*}
+ where the sum excludes the infinite cluster. This
+quantity $sn_s(p)$ is somewhat
 analogous to a Boltzman weight in that it gives us information on the probabilities of
 certain configurations of the system.
 
-\item[$s_\xi$] We will find that the cluster number
+\item[$s_\xi\quad$] We will find that the cluster number
 distribution away from the percolation threshold, $n_s \propto \exp{(s/s_\xi)}$.
 The scaling factor in the denominator is the \textbf{cutoff cluster size}.  This will
 generally diverge at the percolation threshold allowing us to define the critical exponent
 $\sigma$
 \[ s_\xi \propto |p_c - p|^{-\frac{1}{\sigma}} \ \text{as}\ p\to p_c \]
 
-\item[$S$] The cluster number distribution allows us to calculate a \text{mean cluster
+\item[$S$\quad] The cluster number distribution allows us to calculate a \text{mean cluster
 size} which we define as the average cluster size to which a given occupied bond belongs.
-As the probability of occupied sites belonging to s clusters is
+As the fraction of occupied bonds belonging to s clusters is
 \(\frac{sn_s(p)N}{pN} = \frac{sn_s(p)}{\sum sn_s(p)}\) the average cluster size is
 \[S(p) = \frac{\sum s^2 n_s(p)}{\sum s n_s(p)}\]
-(Note that in this definition clusters are sampled by \emph{site} biasing our selection
+(Note that in this definition clusters are sampled by \emph{bond} biasing our selection
 towards larger clusters.  We could similarly have defined an average cluster size in which
 all clusters are sampled with equal probablity
 \(S'(p) = \frac{\sum s n_s(p)}{\sum  n_s(p)}\) but we will find that our current definition
-is more appropriate.)
+is more appropriate.) This is analogous to our susceptibility in thermal problems.
 
 The mean cluster size will also diverge at the percolation threshold, allowing us to
 define the critical exponent $\gamma$
 \[ S \propto |p_c - p|^{-\gamma} \ \text{as}\ p\to p_c \]
 
+\item[$g(r)$] The \textbf{correlation function} or \textbf{pair connectivity} is the
+probability that a bond a distance $r$ away from an occupied site belongs to the same
+cluster.  In analogy to the susceptibilty sum rule, we have a relation between the
+correlation function and the mean cluster size,
+\[\sum_{\vec{r}} g(\vec{r}) = S\]
+which is our motivation for defining the average cluster size as we have.
 
+\item[$\xi\quad$] We will find that we can typically write the correlation function as
+\(g(r) \propto \exp{(r/\xi)}\) where the scaling factor $\xi$ is the
+\textbf{correlation length}. It will typically diverge at the percolation threshold,
+allowing us to define the critical exponent $\nu$,
+\[ \xi \propto |p_c - p|^{-\nu} \ \text{as}\ p\to p_c \]
 \end{enumerate}
 
-\subsection{Critical Exponents}
-\subsection{Physical Correspondences}
+%==================================================================================
+% EXACT SOLUTIONS
+%==================================================================================
+
 \section{Exact Solutions}
+
+In this section we will calculate the preceding quantities in two scenarios in which they
+may be evaluated exactly: the one dimensional chain and the Bethe Lattice.  Again
+similar coverages for site percolation (which is identical to bond percolation in 1d)
+may be found in \cite{stauffer94}\cite{christensen02}
+
 \subsection{One-Dimension}
-\subsection{Bethe Lattice}
-\section{Mean-Field Techniques}
-\subsection{Mean Field Theory}
-\subsection{Effective Medium Theory}
+
+On an infinite lattice, any unoccupied bond will break the infinite cluster and thus
+we can only have percolation at $p_c = 1$ (in analogy with the 1d Ising model).  The
+strength $P(p)$ is thus zero for $p<1$ and jumps discontinuously to $1$ at percolation.
+
+To find the cluster number distribution, we note that the probability for a cluster
+of size $s$ to lie at any given position is $p^s(1-p)^2$.  As the number of possible
+locations for such a cluster is equal to the number of bonds we have (from the linearity
+of the expectation) that the expected number of such clusters \emph{per bond} is
+\[n_s(p) = p^s(1-p)^2\]
+As a check, we can evaluate,
+\begin{align*}
+\sum_s sn_s(p) &= \sum_s sp^s(1-p)^2 \\
+ &= (1-p)^2 (p\d{}{p})\sum_s p^s \\
+ &= p\frac{(1-p)^2}{(1-p)^2} = p \\
+\end{align*}
+We may write this
+quantity as,
+\[n_s(p) = (p_c - p)^2\exp{(-s/s_\xi)}, \quad s_\xi = -\frac{1}{\ln{p}}\]
+and obtain the cutoff cluster size.  We thus have
+\[s_\xi = -\frac{1}{\ln(1 - (p_c - p))}\propto |p_c - p|^{-1}\]
+yielding the critical exponent $\sigma=1$.
+
+To evaluate the average cluster size, we proceed as with our previous check on
+the cluster number distribution to obtain,
+\[S = \frac{\sum_s s^2n_s(p)}{\sum_s sn_s(p)} = \frac{1+p}{1-p}\]
+and we can immediately identify $\gamma=1$.
+
+Lastly, in order for two bonds separated by a distance $r$ to be connected, all
+bonds between them must be connected and thus \(g(r) = p^r = \exp(-r/\xi)\) giving
+\[\xi = -\frac{1}{\ln(1 - (p_c - p))}\propto |p_c - p|^{-1}\]
+and $\nu = 1$.  We can confirm the susceptibility sum rule noting that the sum over
+$\vec{r}$ breaks into a contribution from $r=0$ and two from bonds to the left and
+right.
+\[\sum_{\vec{r}}g(r) = 1 + 2\sum_{r=1,2..} p^r = 
+1 + 2p\sum_{s=0,1,2..} p^s= \frac{1+p}{1-p} = S\]
+
+\subsection{Bethe Lattice/Mean-Field Solution}
+
+The Bethe lattice is an infinite tree (read no loops) in which each site has
+$z$ nearest neighbors.  If $z=2$ we regain the 1d chain. The Bethe lattice is 
+so named for the Bethe Peierls
+approximation which is exact upon it and the ease of solution on the Bethe lattice stems
+from the fact that every pair of sites possesses a single path joining them and its
+translation symmetry may be used to obtain self consistency equations for many
+quantities. Readers interested in its history and breadth of application in physics
+can consult Thorpe's charming and seemingly obscure coverage in \cite{thorpe82}.
+
+Considering entering a site through an occupied bond, we expect that the lattice will
+percolate when the expected number of bonds continuing onward is 1.  This yields the
+correct percolation threshold of $p_c = \frac{1}{z-1}$ which may be established
+rigorously \cite{fisher61}.
+
 \section{Scaling Relations}
 \section{Renormalization}
 \section{Extensions}
