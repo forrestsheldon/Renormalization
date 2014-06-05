@@ -42,7 +42,81 @@ $p_c$ beyond which an infinite cluster exists.
 
 We may consider a similar problem where bonds are all occupied but \emph{sites}
 are initially vacant.  Each site is occupied with a probability $p$ and clusters
-are collections of occupied sites connected by bonds.
+are collections of occupied sites connected by bonds.  This defines the
+\textbf{site percolation} as opposed to \textbf{bond percolation} mentioned previously.
+Depending on the physical problem we are interested in, we may choose to frame
+it in terms of sites or bonds but the results given by either will be closely
+related.  Here we will focus on bond percolation with the intention of relating our
+results to the random resistor network.  This coverage is adapted from \cite{stauffer94}
+\cite{kristenson} which both cover site percolation.  Results here have been
+rederived for bond percolation following their arguments.
+
+\subsection{Important Quantities and Exponents}
+
+We will make use of several quantities to characterize the lattice and it's transition.
+Here we give a brief summary of each, important relations
+involving them and their critical exponents:
+
+\begin{enumerate}
+
+\item[$p_c$] The \textbf{percolation threshold} is the concentration at which an infinite cluster
+will form on an infinite lattice.  While easily evaluated on the Bethe lattice, analytical
+results resisted attempts for 20 years after the problem was initally posed.  As with
+the critical temperature, it is nonuniversal and depends on the details of the lattice
+structure.  Currently accepted values may be viewed in Table \ref{tab:perc_thresh}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{ | l | r | l | l | }
+    \hline
+    Lattice & Coord. \# & Site & Bond \\
+    \hline \hline
+    1d & 2 & 1 & 1 \\ \hline
+    2d Honeycomb & 3 & 0.6962 & $1-2\sin{\pi/8}\approx 0.65271$ \\ \hline
+    2d Square & 4 & 0.592746 & 1/2 \\ \hline
+    2d Triangular & 6 & 1/2 & $2\sin{\pi/18}\approx 0.34729$ \\ \hline
+    3d Diamond & 4 & 0.43 & 0.388 \\ \hline
+    3d Simple cubic & 6 & 0.3116 & 0.2488 \\ \hline
+    4d Hypercubic & 8 & 0.197 & 0.1601 \\ \hline
+    5d Hypercubic & 10 & 0.141 & 0.1182 \\ \hline
+    Bethe Lattice & z & 1 / (z-1) & 1 / (z-1) \\ \hline
+  \end{tabular}
+  \caption{Percolation thresholds for various lattices.  Note that within a dimension,
+           the threshold decreases with increasing coordination number.  This is an
+           abridged version of a table found in KRISTENSON.}
+  \label{tab:perc_thresh}
+\end{table}
+
+\item[$n_s(p)$] The \textbf{cluster number distribution} gives the average number of
+clusters of size $s$ per lattice site (such that in a lattice of size $N$ there will be on
+average $Nn_s(p)$ clusters of size $s$ at concentration $p$).  As all bonds must belong
+to a cluster of some size (at least below the percolation threshold) we have
+\(\sum_s sn_s(p) = p\). This quantity $sn_s(p)$ is somewhat
+analogous to a Boltzman weight in that it gives us information on the probabilities of
+certain configurations of the system.
+
+\item[$s_\xi$] We will find that the cluster number
+distribution away from the percolation threshold, $n_s \propto \exp{(s/s_\xi)}$.
+The scaling factor in the denominator is the \textbf{cutoff cluster size}.  This will
+generally diverge at the percolation threshold allowing us to define the critical exponent
+$\sigma$
+\[ s_\xi \propto |p_c - p|^{-\frac{1}{\sigma}} \ \text{as}\ p\to p_c \]
+
+\item[$S$] The cluster number distribution allows us to calculate a \text{mean cluster
+size} which we define as the average cluster size to which a given occupied bond belongs.
+As the probability of occupied sites belonging to s clusters is
+\(\frac{sn_s(p)N}{pN} = \frac{sn_s(p)}{\sum sn_s(p)}\) the average cluster size is
+\[S(p) = \frac{\sum s^2 n_s(p)}{\sum s n_s(p)}\]
+(Note that in this definition clusters are sampled by \emph{site} biasing our selection
+towards larger clusters.  We could similarly have defined an average cluster size in which
+all clusters are sampled with equal probablity
+\(S'(p) = \frac{\sum s n_s(p)}{\sum  n_s(p)}\) but we will find that our current definition
+is more appropriate.)
+
+The mean cluster size will also diverge at the percolation threshold, allowing us to
+define the critical exponent $\gamma$
+\[ S \propto |p_c - p|^{-\gamma} \ \text{as}\ p\to p_c \]
+\end{enumerate}
 
 \subsection{Critical Exponents}
 \subsection{Physical Correspondences}
