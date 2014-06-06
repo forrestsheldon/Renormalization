@@ -63,7 +63,7 @@ involving them and their critical exponents:
 
 \begin{enumerate}
 
-\item[$p_c$] The \textbf{percolation threshold} is the concentration at which an infinite cluster
+\item[$p_c\quad$] The \textbf{percolation threshold} is the concentration at which an infinite cluster
 will form on an infinite lattice.  While easily evaluated on the Bethe lattice, analytical
 results resisted attempts for 20 years after the problem was initally posed.  As with
 the critical temperature, it is nonuniversal and depends on the details of the lattice
@@ -83,7 +83,7 @@ structure.  Currently accepted values may be viewed in Table \ref{tab:perc_thres
     3d Simple cubic & 6 & 0.3116 & 0.2488 \\ \hline
     4d Hypercubic & 8 & 0.197 & 0.1601 \\ \hline
     5d Hypercubic & 10 & 0.141 & 0.1182 \\ \hline
-    Bethe Lattice & z & 1 / (z-1) & 1 / (z-1) \\ \hline
+    Bethe Lattice & z & $1 / (z-1)$ & $1 / (z-1)$ \\ \hline
   \end{tabular}
   \caption{Percolation thresholds for various lattices.  Note that within a dimension,
            the threshold decreases with increasing coordination number.  This is an
@@ -211,6 +211,16 @@ Considering entering a site through an occupied bond, we expect that the lattice
 percolate when the expected number of bonds continuing onward is 1.  This yields the
 correct percolation threshold of $p_c = \frac{1}{z-1}$ which may be established
 rigorously \cite{fisher61}.
+
+Our argument for the cluster number distribution in 1d applies here as well,
+but suffers from a complication.  In 1d, there is a single possible
+configuration for a cluster of $s$ bonds: a chain of length $l$.  Such a chain
+has a perimeter of 2 and so the contribution to the cluster number
+distribution is of the form $g_{s,t}p^s(1-p)^t$ where $g_{s,t}$ is the
+multiplicity of shapes of clusters of size $s$ and perimeter $t$.  We can
+thus write the cluster number distribution as
+\[n_s(p) = \sum_t g_{s,t}p^s(1-p)^t.\]
+
 
 \section{Scaling Relations}
 \section{Renormalization}
