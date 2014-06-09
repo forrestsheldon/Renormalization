@@ -1,4 +1,5 @@
 \input{header.tex}
+\bibliographystyle{plain}
 \title{Percolation in Random Resistor Networks}
 \author{Forrest Sheldon}
 \date{\today}
@@ -47,9 +48,9 @@ are collections of occupied sites connected by bonds.  This defines the
 Depending on the physical problem we are interested in, we may choose to frame
 it in terms of sites or bonds but the results given by either will be closely
 related.  Here we will focus on bond percolation with the intention of relating our
-results to the random resistor network.  This coverage is adapted from \cite{stauffer94}
-\cite{christensen02} which both cover site percolation.  Results here have been
-rederived for bond percolation following their arguments.
+results to the random resistor network.  This coverage is adapted from
+\cite{Stauffer1994} \cite{Christensen2002} which both cover site percolation.
+Results here have been rederived for bond percolation following their arguments.
 
 %==================================================================================
 % IMPORTANT QUANTITIES AND EXPONENTS
@@ -87,7 +88,7 @@ structure.  Currently accepted values may be viewed in Table \ref{tab:perc_thres
   \end{tabular}
   \caption{Percolation thresholds for various lattices.  Note that within a dimension,
            the threshold decreases with increasing coordination number.  This is an
-           abridged version of a table found in \cite{christensen02}.}
+           abridged version of a table found in \cite{Christensen2002}.}
   \label{tab:perc_thresh}
 \end{table}
 
@@ -156,7 +157,7 @@ allowing us to define the critical exponent $\nu$,
 In this section we will calculate the preceding quantities in two scenarios in which they
 may be evaluated exactly: the one dimensional chain and the Bethe Lattice.  Again
 similar coverages for site percolation (which is identical to bond percolation in 1d)
-may be found in \cite{stauffer94}\cite{christensen02}
+may be found in \cite{Stauffer1994} \cite{Christensen2002}
 
 \subsection{One-Dimension}
 
@@ -173,7 +174,7 @@ As a check, we can evaluate,
 \begin{align*}
 \sum_s sn_s(p) &= \sum_s sp^s(1-p)^2 \\
  &= (1-p)^2 (p\d{}{p})\sum_s p^s \\
- &= p\frac{(1-p)^2}{(1-p)^2} = p \\
+ &= p\frac{(1-p)^2}{(1-p)^2} = p
 \end{align*}
 We may write this
 quantity as,
@@ -203,12 +204,31 @@ $z$ nearest neighbors.  If $z=2$ we regain the 1d chain. The Bethe lattice is
 so named for the Bethe Peierls
 approximation whose results are exact when applied to the Bethe lattice.
 Readers interested in its history and breadth of application in physics
-can consult Thorpe's charming and seemingly obscure coverage in \cite{thorpe82}.
+can consult Thorpe's charming and seemingly obscure coverage in \cite{Thorpe1982}.
 
 Considering entering a site through an occupied bond, we expect that the lattice will
 percolate when the expected number of bonds continuing onward is 1.  This yields the
 correct percolation threshold of $p_c = \frac{1}{z-1}$ which may be established
-rigorously \cite{fisher61}.
+through more rigorous and complex methods \cite{Fisher1961}.
+
+In order to obtain the strength of the infinite cluster, we consider a arbitrary
+bond in the lattice.  In order for this bond to be connected to the infinite
+cluster, it must be occupied and at least one neighboring bond must be connected
+to the cluster.  This begs us to introduce the probability $Q$ that a given neighboring
+bond is not part of the infinite cluster.  The structure of the Bethe lattice allows us
+to obtain a self-consistent equation for the probability $Q$.  If a bond does not
+connect to infinity, it must be either unoccupied, or occupied and none of its
+neighboring bonds connects to infinity, $Q = (1-p) + pQ^{z-1}$.  Aside from
+perturbatively, I am not sure how to solve this for arbitrary $z$ (If anyone
+reading this knows how, I would appreciate an e-mail. While I know that an arbitrary
+higher degree polynomial is not analyticaly soluble, I am not so pessimistic about
+the depressed form here.)  We will examine the situation in the
+simpler regime where $z=3$.  Here we can solve, $pQ^2 - Q + (1-p) = 0$ giving the
+two solutions $Q=1, \frac{1-p}{p}$. The probability that an arbitrary bond is both
+occupied and connects to the infinite cluster is then,
+\[P(p) = p(1-Q^4) = \frac{p^4-(1-p)^4}{p^3}.\]
+Evaluation at the percolation threshold yields $P(p_c) = 0$ as expected and
+$P'(p_c)>0$ which requires $\beta=1$.
 
 Our argument for the cluster number distribution in 1d applies here as well,
 but suffers from a complication.  In 1d, there is a single possible
@@ -216,11 +236,54 @@ configuration for a cluster of $s$ bonds: a chain of length $l$.  Such a chain
 has a perimeter of 2 and so the contribution to the cluster number
 distribution is of the form $g_{s,t}p^s(1-p)^t$ where $g_{s,t}$ is the
 multiplicity of shapes of clusters of size $s$ and perimeter $t$.  We can
-thus write the cluster number distribution as
+thus write the cluster number distribution for an arbitrary lattice as
 \[n_s(p) = \sum_t g_{s,t}p^s(1-p)^t.\]
+The Bethe lattice also possesses the attractive property that there is a unique
+relationship between cluster size and perimeter.  If we consider a single bond,
+it has a perimeter of $t_1 = 2(z-1)$.  In adding another bond we will decrease
+the perimeter by 1 and increase it by $z-1$.  This will continue such that we
+have the general form for a perimeter of $t_s = (s-1)(z-2) + 2z-2 = s(z-2) +z$ and thus a cluster
+number distribution of the form
+\[n_s(p) = g_{s,t}p^s(1-p)^{s(z-2) + z}.\]
+Evaluation of the multiplicity $g_{s,t}$ is somewhat complex and may continue
+through a pleasing use
+of generating functions \cite{Fisher1961} which, time permitting, may be included
+in an appendix. As we are primarily interested in the form near
+the critical point, we will bypass this difficulty by considering the ratio,
+\[\frac{n_s(p)}{n_s(p_c)} = \frac{(1-p)}{(1-p_c)}^{z}
+\left(\frac{p(1-p)^{{z-2}}}{p_c(1-p_c)^{{z-2}}}\right)^s\propto \exp{(-s/s_\xi)}
+\]
+and we again observe an exponential decay in the cluster size away from the
+percolation threshold.  We thus have for our cutoff cluster size,
+\[s_\xi = -\frac{1}{\ln{\left(\frac{p(1-p)^{z-2}}{p_c(1-p_c)^{z-2}}\right)}}.\]
+Observing that the argument of the logarithm is a polynomial with a maximum of 1
+at $p_c = \frac{1}{z-1}$, and thus near $p_c$ may be approximated by
+\[s_\xi \approx -\frac{1}{\ln{\left(1 - a(p - p_c)^2 \right)}}\propto |p_c - p|^{-2}\]
+yielding the critical exponent $\sigma = \frac{1}{2}$.
 
+An argument similar to our calculation of the strength yields the average cluster
+size.  Given an occupied site, the average cluster size will be $S = 1 + 2(z-1)T$
+where $T$ is the average number of sites connected to a single branch.  The 
+average contribution is 0 with probability $1-p$ and $1 + (z-1)T$ with probability
+$p$.  This yields an average contribution per branch of $T = \frac{p}{1-(z-1)p}$
+and an average cluster size of $S = \frac{1 + (z-1)p}{1-(z-1)p}$ from which we
+can read off the critical exponent $\gamma=1$
 
+Lastly, the correlation function $g(r)$.  In the same fashion as in 1d, in order
+for two bonds separated by $r$ to be connected, all bonds along the unique path
+joining them must be occupied.  This gives $g(r) = p^r$ from which we get the
+same correlation length as in 1d,
+\[\xi = -\frac{1}{\ln p}.\]
+which no longer diverges as $p\to p_c$.  We conclude that in the Bethe lattice
+$\nu=-1$.  We may again confirm our susceptibility sum rule: beginning at a single
+bond, the $r=1$ level has $2(z-1)$ bonds, the $r=2$, $2(z-1)^2$ and so on such that,
+\begin{align*}
+\sum_{\vec{r}}g(\vec{r}) =& 1 + 2 \sum_{r=1,2,...} (z-1)^r p^r \\
+=& 1 + \frac{2(z-1)p}{1 - (z-1)p} = \frac{1 + (z-1)p}{1 - (z-1)p} = S
+\end{align*}
 \section{Scaling Relations}
+
 \section{Renormalization}
 \section{Extensions}
+\bibliography{percolation}
 \end{document}
