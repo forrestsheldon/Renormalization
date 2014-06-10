@@ -1,4 +1,5 @@
 \input{header.tex}
+\usepackage{graphicx}
 \bibliographystyle{plain}
 \title{Percolation in Random Resistor Networks}
 \author{Forrest Sheldon}
@@ -141,9 +142,11 @@ correlation function and the mean cluster size,
 \[\sum_{\vec{r}} g(\vec{r}) = S\]
 which is our motivation for defining the average cluster size as we have.
 
-\item[$\xi\quad$] We will find that we can typically write the correlation function as
-\(g(r) \propto \exp{(r/\xi)}\) where the scaling factor $\xi$ is the
-\textbf{correlation length}. It will typically diverge at the percolation threshold,
+\item[$\xi\quad$] The \textbf{correlation length} is the rms radius of a typical
+cluster.  We can define it through the normalized correlation function
+$\frac{g(r)}{S(p)}$ as,
+\[\xi^2 = \frac{1}{S(p)}\sum_{\vec{r}}r^2 g(\vec{r}).\]
+It will typically diverge at the percolation threshold,
 allowing us to define the critical exponent $\nu$,
 \[ \xi \propto |p_c - p|^{-\nu} \ \text{as}\ p\to p_c \]
 \end{enumerate}
@@ -188,14 +191,20 @@ the cluster number distribution to obtain,
 \[S = \frac{\sum_s s^2n_s(p)}{\sum_s sn_s(p)} = \frac{1+p}{1-p}\]
 and we can immediately identify $\gamma=1$.
 
-Lastly, in order for two bonds separated by a distance $r$ to be connected, all
-bonds between them must be connected and thus \(g(r) = p^r = \exp(-r/\xi)\) giving
-\[\xi = -\frac{1}{\ln(1 - (p_c - p))}\propto |p_c - p|^{-1}\]
-and $\nu = 1$.  We can confirm the susceptibility sum rule noting that the sum over
+In order for two bonds separated by a distance $r$ to be connected, all
+bonds between them must be connected and thus \(g(r) = p^r$.  We can confirm the susceptibility sum rule noting that the sum over
 $\vec{r}$ breaks into a contribution from $r=0$ and two from bonds to the left and
 right.
 \[\sum_{\vec{r}}g(r) = 1 + 2\sum_{r=1,2..} p^r = 
-1 + 2p\sum_{s=0,1,2..} p^s= \frac{1+p}{1-p} = S\]
+1 + 2p\sum_{s=0,1,2..} p^s= \frac{1+p}{1-p} = S.\]
+
+Lastly, to obtain the correlation length, we evaluate
+\begin{align*}
+\xi^2 =& \frac{1-p}{1+p}\:\sum_{\vec{r}}r^2p^r \\
+=& \frac{1-p}{1+p}\left(p\d{}{p}\right)^2 2\sum_{r=1,2...}p^r \\
+=& \frac{2p}{(1-p)^2}
+\end{align*}
+and we find $\nu = 1$.
 
 \subsection{Bethe Lattice/Mean-Field Solution}
 
@@ -269,19 +278,52 @@ $p$.  This yields an average contribution per branch of $T = \frac{p}{1-(z-1)p}$
 and an average cluster size of $S = \frac{1 + (z-1)p}{1-(z-1)p}$ from which we
 can read off the critical exponent $\gamma=1$
 
-Lastly, the correlation function $g(r)$.  In the same fashion as in 1d, in order
+In the same fashion as in 1d, in order
 for two bonds separated by $r$ to be connected, all bonds along the unique path
-joining them must be occupied.  This gives $g(r) = p^r$ from which we get the
-same correlation length as in 1d,
-\[\xi = -\frac{1}{\ln p}.\]
-which no longer diverges as $p\to p_c$.  We conclude that in the Bethe lattice
-$\nu=-1$.  We may again confirm our susceptibility sum rule: beginning at a single
+joining them must be occupied.  This gives $g(\vec{r}) = p^r$ and we may again
+confirm our susceptibility sum rule: beginning at a single
 bond, the $r=1$ level has $2(z-1)$ bonds, the $r=2$, $2(z-1)^2$ and so on such that,
 \begin{align*}
 \sum_{\vec{r}}g(\vec{r}) =& 1 + 2 \sum_{r=1,2,...} (z-1)^r p^r \\
 =& 1 + \frac{2(z-1)p}{1 - (z-1)p} = \frac{1 + (z-1)p}{1 - (z-1)p} = S
 \end{align*}
+
+Lastly, to obtain the correlation length, we evaluate
+\begin{align*}
+\xi^2 =& \frac{1-(z-1)p}{1+(z-1)p}\:\sum_{\vec{r}}r^2(z-1)^rp^r \\
+=& \frac{1-(z-1)p}{1+(z-1)p}\left(p\d{}{p}\right)^2 2\sum_{r=1,2...}(z-1)^rp^r \\
+=& \frac{2(z-1)p}{(1-(z-1)p)^2}
+\end{align*}
+and we find $\nu = 1$.
 \section{Scaling Relations}
+
+The exponential decay we have observed in the cluster number distribution is far
+from a complete picture of its behavior. As with magnetic systems, there are many
+choices for a scaling hypothesis including the finite cluster probability, correlation
+function, and cluster number distribution.  These are reviewed and compared in
+\cite{Essam1980}. In the interest of conserving space and not introducing
+more new quantities I have chosen to follow Stauffer and Christensen in examining
+the cluster number distribution scaling. To facilitate the discussion, in figure
+\ref{fig:cluster_num_1d} we have displayed the cluster number distribution in 1d
+taken from \cite{Christensen2002}.  On the left, we observe two regimes of behavior.
+For $s<s_\xi$ the distribution decreases with a power law behavior while clusters
+larger than $s_\xi$ are exponentially suppressed. The similarity of these curves
+suggests that if we rescale by the cutoff such that the dotted lines coincide
+and introduce a scaling on the vertical axis, these may all be instantiations
+of the same curve.  Indeed, on the right we find that when the proper scaling
+factors are selected, all distributions collapse onto a single curve $x^2 e^{-x}$.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.8\textwidth]{cluster_num_1d_christensen}
+  \caption{Cluster number distribution in 1d.  Dotted vertical lines in both
+           figures are the cutoff cluster size $s_\xi$.  In the left figure we note
+           power law behavior when $s<s_\xi$ and exponential decay when $s>x_\xi$.
+           On the right, we observe that when scaled properly, the distributions 
+           collapse onto a single curve as $p\to p_c$.
+           Taken from \cite{Christensen2002}.}
+  \label{fig:cluster_num_1d}
+\end{figure}
+
 
 \section{Renormalization}
 \section{Extensions}
