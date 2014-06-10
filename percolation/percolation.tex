@@ -295,6 +295,11 @@ Lastly, to obtain the correlation length, we evaluate
 =& \frac{2(z-1)p}{(1-(z-1)p)^2}
 \end{align*}
 and we find $\nu = 1$.
+
+%==================================================================================
+% SCALING RELATIONS
+%==================================================================================
+
 \section{Scaling Relations}
 
 The exponential decay we have observed in the cluster number distribution is far
@@ -303,7 +308,9 @@ choices for a scaling hypothesis including the finite cluster probability, corre
 function, and cluster number distribution.  These are reviewed and compared in
 \cite{Essam1980}. In the interest of conserving space and not introducing
 more new quantities I have chosen to follow Stauffer and Christensen in examining
-the cluster number distribution scaling. To facilitate the discussion, in figure
+the cluster number distribution scaling.
+
+To facilitate the discussion, in figure
 \ref{fig:cluster_num_1d} we have displayed the cluster number distribution in 1d
 taken from \cite{Christensen2002}.  On the left, we observe two regimes of behavior.
 For $s<s_\xi$ the distribution decreases with a power law behavior while clusters
@@ -312,20 +319,144 @@ suggests that if we rescale by the cutoff such that the dotted lines coincide
 and introduce a scaling on the vertical axis, these may all be instantiations
 of the same curve.  Indeed, on the right we find that when the proper scaling
 factors are selected, all distributions collapse onto a single curve $x^2 e^{-x}$.
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=0.8\textwidth]{cluster_num_1d_christensen}
-  \caption{Cluster number distribution in 1d.  Dotted vertical lines in both
-           figures are the cutoff cluster size $s_\xi$.  In the left figure we note
-           power law behavior when $s<s_\xi$ and exponential decay when $s>x_\xi$.
-           On the right, we observe that when scaled properly, the distributions 
-           collapse onto a single curve as $p\to p_c$.
-           Taken from \cite{Christensen2002}.}
-  \label{fig:cluster_num_1d}
-\end{figure}
+%\begin{figure}[h]
+%  \centering
+%    \includegraphics[width=0.8\textwidth]{cluster_num_1d_christensen}
+%  \caption{Cluster number distribution in 1d.  Dotted vertical lines in both
+%           figures are the cutoff cluster size $s_\xi$.  In the left figure we note
+%           power law behavior when $s<s_\xi$ and exponential decay when $s>x_\xi$.
+%           On the right, we observe that when scaled properly, the distributions 
+%           collapse onto a single curve as $p\to p_c$.
+%           Taken from \cite{Christensen2002}.}
+%  \label{fig:cluster_num_1d}
+%\end{figure}
+This suggests that cluster number distribution scales as a power of $s$
+mulitiplied by a function
+of the single variable $s/s_\xi = (p-p_c)^{\frac{1}{\sigma}}s$. For 1d
+this is apparently $n_s(p) = s^{-2} f(s/s_\xi)$ with $f(x) = x^2 e^{-x}$.
+A similar argument for the Bethe lattice suggests the form 
+$n_s(p) \propto s^{-5/2} f(s/s_\xi)$ with $f(x) = e^{-x}$.  We would like to
+posit the general form $n_s(p) \propto s^{-\tau} f(s/s_\xi)$ but we
+encounter a problem in the argument of $f$. From the 
+perimeter expansion for $n_s(p)$ we
+know $n_s(p)$ is polynomial in $p$ and thus all derivatives are smooth.
+However if the argument of the function is of the form $(p-p_c)^{\frac{1}{\sigma}}s$
+ with noninteger 
+$\frac{1}{\sigma}$, derivatives will generate negative powers of $(p - p_c)$
+and thus singularities. To sidestep this difficulty, we modify the argument of
+the function $(p-p_c)^{\frac{1}{\sigma}}s \Rightarrow (p-p_c)s^\sigma$
+and require that all derivatives of our function are also smooth.
 
+Our final scaling form is thus,
+\[n_s(p) \propto s^{-\tau} f((p-p_c)s^\sigma) \]
+for large $s$ and $p\to p_c$.  Generally $f(x)$ is slowly varying
+for $x \ll 1$ and decays exponentially for $x \gg 1$.  The exponents $\tau$
+and $\sigma$ and the function $f$ are independent of the lattice details
+and depend only on dimensionality.  In analogy to thermal phase transitions
+we may use this relationship to derive scaling laws relating our critical
+exponents. For a few examples:
+\begin{itemize}
+\item The divergence in the average cluster size as $p\to p_c^-$ is driven
+by the numerator $\sum_s s^2 n_s(p).$ As this sum diverges due to contributions
+at large $s$, we may extract the scaling of the divergence by converting the sum
+to an integral,
+\begin{align*}
+\sum_s s^{2-\tau}f((p-p_c)s^\sigma) \approx& \int^\infty_1 ds\: 
+                                          s^{2-\tau}f((p-p_c)s^\sigma) \\
+\approx& (p-p_c)^\frac{\tau-3}{\sigma} \int_{(p-p_c)}^\infty
+                                    dz \frac{1}{\sigma} |z|^\frac{3-\sigma-\tau}
+                                                         {\sigma} f(z).
+\end{align*}
+As the divergence was at large $s$ we may set the lower limit to 0
+and identify \(\gamma = \frac{3-\tau}{\sigma}\).
+
+\item When we attempt to calculate the power, $P = p - \sum_s s n_s(p)$ the
+sum is finite and conversion to an integral will not work.  Furthermore, the
+difference with p does not allow us to extract the scaling.  We circumvent
+this by taking two derivatives with respect to $p$, yielding the relation,
+\begin{align*}
+(p-p_c)^{\beta-2} \propto& \int^\infty_1 ds\: 
+                                          s^{1-\tau + 2\sigma}f((p-p_c)s^\sigma) \\
+\approx& (p-p_c)^\frac{2-\tau+2\sigma}{\sigma} \int_{(p-p_c)}^\infty
+                                    dz \frac{1}{\sigma} |z|^\frac{2-\tau+\sigma}
+                                                         {\sigma} f(z).
+\end{align*}
+Which yields the relation $\beta = \frac{\tau-2}{\sigma}$.
+
+\item We may also define a specific heat exponent in analogy to the scaling
+of the free energy in thermal transitions.  The number of finite clusters
+per lattice site $M_0 = \sum_s n_s(p) \propto (p-p_c)^{2-\alpha}$.  An
+argument similar to the last two yields $2-\alpha = \frac{\tau -1}{\sigma}$.
+\end{itemize}
+Combining these three relationships to eliminate $\tau$ and $\sigma$ gives
+the familiar Rushbrooke scaling law, $\alpha + 2\beta + \gamma = 2$.
+
+%==================================================================================
+% RENORMALIZATION
+%==================================================================================
 
 \section{Renormalization}
+
+The percolation problem is in some ways a more accessible environment in which to
+apply renormalization methods.  As we are able to renormalize the probabilites
+directly and in real space, the procedure is simplified and thus more conceptually
+clear. To avoid a digression into a mapping to the Potts model in order
+to apply momentum space RG, only real-space methods will be discussed here.
+ As the lattice tranformation in site percolation is somewhat more
+transparent, we will walk through the RG steps using it as an example.
+\begin{enumerate}
+\item[I] We begin by replacing the lattice with a 'superlattice' of
+blocks of linear size $l$.  As in thermal transitions, the new lattice
+should carry the same symmetry as the old such that renormalization may
+be repeated.
+
+On the triangular lattice in site percolation, we may
+select triangle of three sites which will become a single site on the
+'superlattice.'  This gives a linear size of $l=\sqrt{3}$.
+
+\item[II] Blocks in the old lattice are averaged to determine a new
+probability $p' = R_l(p)$.
+
+The RG will shift the probability of our latticeWe use a majority rule to determine the state of the 'superblock.' The
+probability that two or more sites are occupied is,
+\[p' = R_l(p) = p^3 + 3p^2(1-p) = 3p^2 - 2p^3.\]
+This gives the fixed points $R_l(p^*) = p^* = 0, 1, \frac{1}{2}$.
+
+\item[III] We restore the original lattice dimensions by rescaling by $l$.
+
+The correlation length in our new model is $\xi' = \frac{\xi}{l}$.
+Near the percolation threshold we have 
+$|R_l(p) - p_c|^{-\nu} = \frac{|p-p_c|^{-\nu}}{l}$.
+A bit of rearrangement yields a formula for $\nu$,
+\[\nu = \frac{\log(l)}{\log\left[\frac{|R_l(p) - R_l(p_c)|}{|p-p_c|}\right]} =
+\frac{\log(l)}{\log\left[\left.\d{R_l(p)}{p}\right|_{p^*}\right]}\]
+
+Evaluating this on the triangular lattice gives
+\[\nu = \frac{\log(\sqrt{3})}{\log(3/2)} = 1.355\]
+which when compared to the exact values of $p_c = \frac{1}{2}$ and
+$\nu = \frac{4}{3}$ is quite impressive for the investment.
+\end{enumerate}
+
+For bond percolation, we are required to choose a slightly more complicated
+transformation.  We consider the square lattice in 2 dimensions and choose
+a $2x2$ block of bonds to renormalize upon (see figure FIGURE).  Bonds along the bottom and right sides
+of the block are left to neighboring blocks and the block will be replaced by
+two bonds, one along the top and another along the left side which will be
+placed with a probability $p'$ in the superlattice.  The cluster spanning rule
+stipulates that the horizontal superbond will be occupied if the original
+block percolates from left to right, and the vertical superbond will be placed
+if it percolates vertically.  The symmetry of the block requires that these
+two events occur with equal probability and we thus only consider
+horizontal percolation.  The possible percolating pond structures are displayed
+in figure FIGURE.  These give the RG transformation,
+\[R_2(p) = 2p^5 - 5p^4 + 2p^3 + 2p^2\]
+with the fixed points,
+\[R_2(p^*) = p^* = 0, 1, \frac{1}{2}.\]
+The RG approximation for bond percolation on the square lattice thus gives
+the exact percolation threshold $p_c = \frac{1}{2}$ and approximate 
+critical exponent $\nu = \frac{\log(2)}{\log(\frac{13}{8})} = 1.428$ for
+the exact value $\nu=\frac{4}{3}$.
+
 \section{Extensions}
 \bibliography{percolation}
 \end{document}
