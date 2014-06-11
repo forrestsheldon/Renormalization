@@ -1,0 +1,36 @@
+\input{header.tex}
+\title{Renormalization and Singular Percolation Theory}
+\author{Forrest Sheldon}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{Dimensional Analysis is Incredibly Useful}
+
+The Buckingham Pi Theorem \cite{Buckingham1914} asserts that any equation
+that completely describes
+the relation between a collection of physical quantities takes the form,
+\[\Pi = f( \Pi_0, \Pi_1, ...,\Pi_n) = 0\]
+where the $\Pi_i$s are all the independent dimensionless products that may be
+formed from the given quantities.  As an example of it's utility, consider the
+diffusion equation in one dimension,
+\[\partial_t u(x, t) = \frac{1}{2} \kappa \partial_{xx} u(x, t)\]
+with an initial condition $u(x, 0) = \frac{A_0}{\sqrt{2\pi l^2}} e^{-x^2 / 2l^2}$.
+By forming the dimensionless quantities,
+\[\Pi = \frac{u \sqrt{\kappa t}}{A_0}\quad \Pi_1 = \frac{x}{\sqrt{\kappa t}} \quad
+\Pi_2 = \frac{l}{\sqrt{\kappa t}} \]
+we may immediately infer a solution of the form,
+\[u  = \frac{A_0}{\sqrt{\kappa t}} f\left(\frac{x}{\sqrt{\kappa t}}, \frac{l}{\sqrt{\kappa t}}\right) \]
+which forms a starting point for futher inquiry.
+
+\subsection{Similarity Solutions}
+Once the dimensional form of the equation is established, it is often productive to
+examine similarity solutions.  In these functions, the arguments occur such that that length
+and time scales are interdependent. (As an example $u(x, t) = t^\alpha f(x t^\beta).$)
+By reducing the number of arguments of the scaling function $f$, similarity solutions
+often allow us to convert PDEs to ODEs greatly facilitating their solution.  In addition,
+the long term behavior of a system is often given by similarity solutions which may be
+evidence of natural stabilization \cite{Barrenblatt1996}.  We call this regime, where
+times/distances are large enough that boudary/initial values no longer influence the system
+but the system is still far from equilibrium \textbf{intermediate asymptotics}.
+\end{document}
