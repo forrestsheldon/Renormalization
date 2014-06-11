@@ -9,7 +9,7 @@
 
 \section{Introduction}
 
-Percolation deals with the properties of clusters created by some
+Percolation deals with the properties of clusters on a lattice created by some
 probabilistic means. Generally, past a threshold an infinite cluster
 will form that spans the lattice and we consider this a phase transition.
 While the process that generates this cluster is simply stated, its properties
@@ -20,16 +20,15 @@ and the generality of the model makes it applicable to a wide variety of physica
 problems from superconductivity to forest fires.
 
 
-This coverage aims to give an introduction to percolation theory with particular
-attention to the problem as a conduction transition in a random resistor network.
+This coverage aims to give a broad introduction to the basic percolation theory
+problem.
 We will follow our coverage of the Ising model, first introducing percolation and
-giving brief attention to it's variants and correspondence to physical transitions.
-Then we will
-review exact solutions on simple lattices, namely in one dimension and the Bethe
-lattice.  Next we will review mean field theory techniques away from the transition
-and then scaling relations derivable from assumptions about the form of the
-infinite cluster.  Finally, we will review applications of renormalization, and give
-a summary of extensions to more complex examples.
+the associated important quantities before
+reviewing exact solutions on simple lattices, namely in one dimension and the Bethe
+lattice.  Next we examine a particular scaling form and illustrate it's use in
+deriving several scaling relations.  Finally, we will review basic applications of
+renormalization, illustrating the conceptual simplicity it possesses when we work
+directly with probabilities.
 
 \subsection{The Basic Percolation Problem}
 
@@ -439,7 +438,8 @@ $\nu = \frac{4}{3}$ is quite impressive for the investment.
 
 For bond percolation, we are required to choose a slightly more complicated
 transformation.  We consider the square lattice in 2 dimensions and choose
-a $2x2$ block of bonds to renormalize upon (see figure FIGURE).  Bonds along the bottom and right sides
+a $2x2$ block of bonds to renormalize upon (see figure \ref{fig:bond_renorm}).
+  Bonds along the bottom and right sides
 of the block are left to neighboring blocks and the block will be replaced by
 two bonds, one along the top and another along the left side which will be
 placed with a probability $p'$ in the superlattice.  The cluster spanning rule
@@ -451,12 +451,28 @@ horizontal percolation.  The possible percolating pond structures are displayed
 in figure FIGURE.  These give the RG transformation,
 \[R_2(p) = 2p^5 - 5p^4 + 2p^3 + 2p^2\]
 with the fixed points,
+
 \[R_2(p^*) = p^* = 0, 1, \frac{1}{2}.\]
 The RG approximation for bond percolation on the square lattice thus gives
 the exact percolation threshold $p_c = \frac{1}{2}$ and approximate 
 critical exponent $\nu = \frac{\log(2)}{\log(\frac{13}{8})} = 1.428$ for
 the exact value $\nu=\frac{4}{3}$.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{Bond_perc}
+  \caption{Bond renormalization on the square lattice using the cluster spanning rule. A 2x2
+           block of bonds (a) is renormalized to a horzontal and vertical pair (b).  Horizontal spanning
+           probabilities for the RG equation are enumerated in (c). Taken from \cite{Stauffer1994}.}
+  \label{fig:bond_renorm}
+\end{figure}
+\section{Conclusion}
 
-\section{Extensions}
+I have endeavored to give a didactic introduction to the percolation problem, both for my own benefit
+and anticipating that readers may not be familiar with the problem.  Most notable here is the omission
+of a discussion of the fractal scaling of the infinite cluster which motivates the notion of a
+fixed point in the renormalization.  These will hopefully be included in a later draft as I plan
+to continue to develop these notes.  Interested readers may consult the excellent notes by Christensen \cite{Christensen2002}
+and the book by Stauffer and Aharony \cite{Stauffer1994}.  Both treat site percolation and I have followed their
+development fairly closely here.
 \bibliography{percolation}
 \end{document}

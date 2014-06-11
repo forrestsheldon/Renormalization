@@ -1,11 +1,19 @@
 \input{header.tex}
-\title{Renormalization and Singular Percolation Theory}
+\bibliographystyle{plain}
+\title{Renormalization in Intermediate Asymptotics}
 \author{Forrest Sheldon}
 \date{\today}
 \begin{document}
 \maketitle
 
-\section{Dimensional Analysis is Incredibly Useful}
+Following the discussion in Goldenfeld's text and a series of his papers, I have taken a
+didactive approach to composing this paper, focusing on the logical progression of ideas 
+allows renormalisation to be applied to dynamic phenomena.  Diffusion is used as the
+'ising model of dynamic phenomena' to illustrate the emergence of anomalous dimensions and
+the elucidation of their cause. Lastly renormalisation is used to tame the divergences
+that arise in singular perturbation theory when a well behaved solution is known to exist.
+
+\section{Dimensional Analysis is great!...when it works}
 
 The Buckingham Pi Theorem \cite{Buckingham1914} asserts that any equation
 that completely describes
@@ -20,7 +28,7 @@ By forming the dimensionless quantities,
 \[\Pi = \frac{u \sqrt{\kappa t}}{A_0}\quad \Pi_1 = \frac{x}{\sqrt{\kappa t}} \quad
 \Pi_2 = \frac{l}{\sqrt{\kappa t}} \]
 we may immediately infer a solution of the form,
-\[u  = \frac{A_0}{\sqrt{\kappa t}} f\left(\frac{x}{\sqrt{\kappa t}}, \frac{l}{\sqrt{\kappa t}}\right) \]
+\[u(x, t)  = \frac{A_0}{\sqrt{\kappa t}} f\left(\frac{x}{\sqrt{\kappa t}}, \frac{l}{\sqrt{\kappa t}}\right) \]
 which forms a starting point for futher inquiry.
 
 \subsection{Similarity Solutions}
@@ -30,7 +38,285 @@ and time scales are interdependent. (As an example $u(x, t) = t^\alpha f(x t^\be
 By reducing the number of arguments of the scaling function $f$, similarity solutions
 often allow us to convert PDEs to ODEs greatly facilitating their solution.  In addition,
 the long term behavior of a system is often given by similarity solutions which may be
-evidence of natural stabilization \cite{Barrenblatt1996}.  We call this regime, where
+evidence of natural stabilization \cite{Barenblatt1996}.  We call this regime, where
 times/distances are large enough that boudary/initial values no longer influence the system
-but the system is still far from equilibrium \textbf{intermediate asymptotics}.
+but the system is still far from equilibrium \textbf{intermediate asymptotics}. (It is
+worth noting that wave equations $f(x - vt)$ which also often describe long term behavior
+may be written as a similarity solution.  Taking $x = \log X,\quad t = \log T$ the
+solution becomes $f(\frac{X}{T^v})$.)
+
+As an example of this procedure, we continue with the diffusion equation following
+Goldenfeld \cite{Goldenfeld1992}.  In the long time limit, we expect the system
+to be independent of $l$, the size of the initial state.  This suggests a similarity
+solution,
+\[u(x, t)  = \frac{A_0}{\sqrt{\kappa t}} f_s\left(\frac{x}{\sqrt{\kappa t}}\right) \propto t^{-1/2} f_s(\xi) \].
+Substitution into the diffusion equation yields the ODE
+\[f_s'' + \xi f' + f = 0\]
+which is easily solved to give the solution in the intermediate regime,
+$u(x, t) = \frac{A_0}{\sqrt{2\pi \kappa t}} e^{-x^2 / 2\kappa t}.$
+
+We observe in this case that the system has no remaining dependence on the initial conditions
+(other than it's parity and size $A_0$ which are conserved in its evolution).  By observing
+this equation we cannot determine the initial size of the system, or the time at which the
+system was begun and thus a locus of initial conditions all will progress to this form
+in the intermediate limit.  This fact is the first hint that renormalization may have a
+part to play in the analysis of systems of this type.  While unnecessary here, we will see
+that for a variety of systems, renormalization techniques yield valuable insights and
+numerics on dynamical phenomena evolving in time.  
+
+\subsection{Intermediate Asymptotics}
+
+In taking the limit of our diffusion equation solution  as $l \to 0$ we have made the
+tacit assumption that the limit is regular.  In this case we were correct and the similarity
+solution we obtained gave the correct asymptotic limit.  However, for a wide variety of
+problems this will not be the case and taking the limit will give rise to anamolous dimensions.
+
+Barenblatt \cite{Barenblatt1996} distinguishes three cases.  Given a relation between
+dimensionless products $\Pi = f(\Pi_0, \Pi_1,...)$, as $\Pi_0 \to 0$,
+\begin{enumerate}
+\item $f$ approaches a finite, nonzero limit.  In this case, we may simply replace $\Pi_0$
+with 0 and proceed with our analysis.  We call this \textbf{intermediate asymptotics of the
+first kind}.
+\item $f$ does not approach a finite limit but posseses power law asymptotics.
+In this case, we may seek a solution of the form
+\[\Pi = \Pi_0^\alpha g(\frac{\Pi_1}{\Pi_0^{\alpha_1}},\frac{\Pi_2}{\Pi_0^{\alpha_2}},...)\]
+where the anomalous dimensions $\alpha, \alpha_1, ...$ must be determined.  Systems
+displaying this behavior posses \textbf{intermediate asymptotics of the second kind}.
+\item Neither of these two limits occur.
+\end{enumerate}
+As illustrated above, dimensional analysis may be capable of tackling problems of the first
+kind.  For problems of the second type, we will need to invoke renormalisation to absorb
+the singular limit.  To motivate this process, we follow another discussion from Goldenfeld
+\cite{Goldenfeld1992}.
+
+\section{Anomalous Dimensions in Problems of the Second Kind}
+
+In this section we will examine a particular example of intermediate asymptotics of the 
+second kind.  We will see that by allowing a normally conserved quantity to vary, we
+introduce a singular dependence on the initial conditions in our scaling function.  Using
+an insighful approximation, we will obtain the anomalous dimensions that arise as a
+consequence without invoking renormalisation.
+
+\subsection{Water Flow in Porous Media - Barenblatt's Equation}
+
+Consider the half-space $z>0$ filled with a porous medium.  When water moves
+into a region of this space, it occupies the maximum available space in each pore
+$\sigma$ (a fraction of each pore is occupied by gas.).  When it exits an occupied
+pore, adhesion causes it to leave a thin film in the pore such that $\sigma_0$
+of the pore remains filled.  This suggests an asymmetry in our dynamics.  When
+water flows into a space it requires a volume proportional to $\sigma$ to fill it,
+but when exiting a space the amount of water that needs to flow out to consider that
+space empty is proportional to $\sigma - \sigma_0$.  This suggests that when the
+height of the water in a region is rising and thus the water is encountering new
+pores, it diffuses with a slow diffusion constant $D$ but in regions where the height
+is falling and less water must flow to empty the space, it diffuses at at some faster
+rate with $(1 + \epsilon)D$.  These dynamics are contained in the Barenblatt equation which
+we write in 1 dimension,
+\[\partial_t \,u(x, t) = D\kappa\, \partial_{xx} u(x, t)\]
+\[ D = \left\{
+             \begin{array}{l l}
+             \frac{1}{2} & \quad \partial_t \,u > 0 \\
+             (1 + \epsilon)\frac{1}{2} &  \quad \partial_t \,u < 0
+             \end{array} \right. \]
+
+We denote the point between these two regimes as the positive $x$ value, $x_0(t, \epsilon)$
+such that $\partial_t\, u(x_0, t) = 0$ It has been proved that solutions to this equation exist,
+are unique, and possess smooth derivatives in $x$ and $t$.
+
+\subsection{Attempting a Similarity Solution}
+
+As with the diffusion equation, we form the dimensionless quantities
+\[\Pi = \frac{u \sqrt{\kappa t}}{A_0}\quad \Pi_1 = \frac{x}{\sqrt{\kappa t}} \quad
+\Pi_2 = \frac{l}{\sqrt{\kappa t}}\quad \Pi_3 = \epsilon\]
+which suggest a similarity solution of the form,
+\[u_s \propto t^{-1/2} f(\xi,\epsilon) \quad \xi = \frac{x}{\sqrt{\kappa t}}\]
+with $\xi_0 = \frac{x_0}{\sqrt{\kappa t}}$.  Plugging this into the PDE gives two
+ODEs,
+\begin{align*}
+(1+\epsilon)f_1'' + \xi f_1' + f_1 = 0& \quad 0 \le \xi < \xi_0 \\
+f_3'' + \xi f_2' + f_2 = 0& \quad  \xi_0< \xi < \infty \\
+\end{align*}
+both of which may be integrated to give,
+\begin{align*}
+f_1 =& B_1 e^{-\xi^2 / 2(1+\epsilon)} \\
+f_2 =& B_2 e^{-\xi^2 / 2}.
+\end{align*}
+This seems like a success until we attempt to enforce our matching conditions at $\xi_0$.  In
+order to match the functions and their first derivatives we are forced to conclude
+$B_1 = B_2 = 0$.  Taken with the existence theorem of the solution, we are forced to conclude
+that no similarity solution of the form given above exists and this problem belongs to
+intermediate asymptotics of the second kind.
+
+\subsection{A Heuristic Derivation using the Similarity solution with Anomalous Dimensions}
+
+We may define the 'mass' of our solution by $m(t) = \int dx u(x, t)$.  The diffusion equation
+conserves mass and we may thus set it to a constant $m(t) = A_0$ however our discussion
+of diffusion in porous media makes it clear that the mass should no longer be conserved.
+To see this explicity we examine,
+\begin{align*}
+\partial_t m(t) =& \int dx D\kappa \partial_{xx} u \\
+=& \int dx \kappa (\partial_x D) (\partial_x u)
+\end{align*}
+where the last step follows from integration by parts.  A constant $D$ will thus conserve mass.
+For Barenblatt's equation, $\partial_x D = \frac{\epsilon}{2}(\delta(x + x_0) - \delta(x - x_0))$
+giving $\partial_t m(t) = \epsilon\kappa\left.\partial_x u\right|_{x_0, t}$.
+
+
+If the diffusion is very slow, we might expect that the form of the solution is similar
+to what we would expect from regular diffusion but with a mass that varies with time,
+\[u \propto \frac{m(t)}{\sqrt{2\pi (kt + l^2)}} \exp\left(\frac{-x^2}{2(kt + l^2)}\right). \]
+This approximation gives $x_0(t) = \sqrt{kt + l^2}$. Using this to evaluate $\partial_t m(t)$,
+we obtain
+\[\partial_t m(t) = -\frac{\epsilon \kappa}{\sqrt{2\pi e}} \frac{m(t)}{kt+l^2}\]
+which we integrate from $t=0$ to get
+\[m(t) = \frac{m(0) l^{2\alpha}}{(kt + l^2)^\alpha} \quad \alpha = \frac{\epsilon}{\sqrt{2\pi e}}.\]
+Inserting this into our supposed asymptotic form and setting all $l$s that do not give a singular
+constribution to 0 yields the intermediate asymptotic form
+\[u \propto \frac{m(0)l^{2\alpha}}{ (kt)^{1/2 + \alpha}} e^\frac{-x^2}{2kt}.\]
+
+It is interesting to note that while $\alpha$ is a consequence of the presence of an
+initial width, it's value is independent of that width confirming that all initial
+conditions will evolve towards this form.  We also note that unlike diffusion, the Barenblatt
+equation possesses no solution for $\delta$ function initial conditions for whom $l=0$.
+
+\section{Renormalisation}
+
+Taking the last section as a parable, we will attempt to recreate the result we found
+previously without assuming the explicit form of a solution.  The renormalisation we apply
+here will consist of two parts: first, by inserting a parameter in our scaling 
+function we will move the singular behavior out of the function.  This will imply a relationship
+between the scaling of our parameter, and the behavior of the solution.  By approximating the
+solution, we will be able to extract the scaling behavior and calculate the anomalous dimensions.
+This coverage roughly follows that found in Goldenfeld \cite{Goldenfeld1992} and 
+\cite{Goldenfeld1989}, both of which discuss Barenblatt's equation.
+
+\subsection{Mass Renormalization}
+
+We begin with our scaling assumption from dimensional analysis,
+\[u(x, t) = \frac{m_l}{\sqrt{\kappa t}} f(\xi, \eta, \epsilon)\]
+where we have called $\xi = \frac{x}{\sqrt{\kappa t}}$ and  $\eta = \frac{l}{\sqrt{\kappa t}}$.
+We are interested in the limit $\eta \to 0$ in which we know $f$ is singular.  In the last
+section we touched on the scaling in the intermediate regime $m_l(0) \propto \eta^{-\alpha} m(t)$.
+According to this relationship, there is no unique value $m_l(0)$ that leads to the currently
+observed value $m(t)$.  Instead, for every $l$ there is a separate $m_l(0)$ that leads to the
+the currently observed value.  It thus follows both that we may redefine the value of $m_l(0)$
+however we wish so long as we retain $m(t)$, and that the intermediate asymptotic solution
+corresponds to the $\eta\to 0$ $m_l(0) \to \infty$ limit in which the initial mass will absorb
+the singular behavior in $f$.
+
+To formalize this insight, we reason that as $m(t)$ and $m_l(0)$ have the same units, they must
+be proportional to one another and introduce the constant of proportionality $m(t) = \frac{m_l}{Z}$
+(where from now one we will write $m_l(0) = m_l$).  As $m(t)$ in the intermediate regime is
+independent of $l$, $Z$ must cancel the dependence and thus $Z=Z(\frac{l}{\mu})$ where $\mu$ is
+an arbitrary length scale chosen to make the ratio dimensionless.  Inserting this into our solution
+gives 
+\[u = \frac{m(t)Z}{\sqrt{\kappa t}} f\left(\xi, \eta, \epsilon \right).\]
+where $Z$ is defined such that for small $l$,
+\[Z\left(\frac{l}{\mu} \right) f\left(\frac{x}{\sqrt{\kappa t}}, \frac{l}{\sqrt{\kappa t}},\epsilon\right)
+ = F\left(\frac{x}{\sqrt{\kappa t}}, \frac{\mu}{\sqrt{\kappa t}}, \epsilon\right) + O(l)\quad l\to 0.\]
+If this tranformation is possible, we then reason that the solution cannot depend on the 
+arbitrary length scale $mu$ that we introduced.  This gives the renormalization group equation,
+\[\mu \d{u}{\mu} = 0\]
+which, eliminating $m$ in favor of $Z$  is,
+\begin{align*}
+\mu \d{}{\mu} \frac{m_l}{Z\sqrt{\kappa t}}F(\xi, \sigma, \epsilon) &= 0, \quad \sigma = 
+\frac{\mu}{\sqrt{\kappa t}}.\\
+\d{\log Z}{\log \mu}F - \sigma \d{F}{\sigma} &= 0
+\end{align*}
+As $m_l$ diverges with $l^{-2\alpha}$ the assumption that our renormalization has absorbed
+the divergence is
+\[\d{\log Z}{\log \mu} = 2\alpha\]
+using which we can solve the full equation to give,
+\[u(x, t) = \frac{m_l}{\sqrt{\kappa t}}\left(\frac{l}{\mu}\right)^{2\alpha} 
+\left(\frac{\mu}{\sqrt{\kappa t}}\right)^{2\alpha} G(\xi, \epsilon) \]
+
+\subsection{Perturbative Renormalization}
+
+We now undertake to perform actually use the RG we have defined to calculate the anomalous
+dimension of Barenblatt's equation.  To do so we perform a perturbative expansion on Barenblatt's
+equation and use our approximation in the scheme above.  In doing so we will find that
+although the solution to the equation is guaranteed to be smooth, the terms in the perturbation
+series will diverge.  By use of the arbitrary length scale $\mu$ we introduced above, we will be
+able to continually push these divergences to higher order, signaling that our actual
+solutions are well behaved.  This is an example of a singular perturbation, in which even small
+additions to the PDE drastically change the behavior of the solution.  As this calculation involves
+many steps, we will split it up into subsections.
+
+\subsubsection{ Perturbative expansion of the solution}
+
+We may write Barenblatt's equation as a diffusion equation with a small perturbing term (and 
+rescaling $\kappa$ to 1 for convenience),
+\[\left(\partial_t - \frac{1}{2} \partial_{xx}\right) u(x, t) = 
+\frac{\epsilon}{2}\Theta(x_0(t) - |x|) \partial_{xx} u(x, t).\]
+We attempt an asymptotic expansion of the solution,
+\[u(x, t) = u_0 + u_1\epsilon + u_2 \epsilon^2 +...\]
+Writing the equation abstractly as $L_D u = \epsilon L_P u$ where $L_D$ is the diffusion operator and
+$L_P$ is the perturbing operator, we obtain equations for the first two terms,
+\begin{align*}
+L_D u_0 &= 0 \\
+L_D u_1 &= L_P u_0.
+\end{align*}
+With a gaussian initial condition with standard deviation $l$, $u_0$ is just,
+\[u_0(x, t) = \frac{m_0}{\sqrt{2\pi(t + l^2)}}\exp\left(\frac{-x^2}{2(t+l^2)} \right).\]
+and the first order term follows from the green's function,
+\begin{align*}
+u_1(x, t) &= \frac{m_0}{2}\int_0^t ds \int_{-\infty}^\infty dy\, G(x-y, t-s)\Theta(y_0(t) - |y|) \partial_{yy} u(y, t) \\
+u_1(x, t) &= \frac{m_0}{2}\int_0^t \frac{ds}{s+l^2}  \int_{-\sqrt{s+l^2}}^{\sqrt{s+l^2}} dy
+\frac{\exp(-(x-y)^2/(2(t-s)))}{\sqrt{2\pi(t-s)}}\frac{\exp(-y^2/(2(s+l^2)))}{\sqrt{2\pi(s+l^2)}}
+\left(\frac{y^2}{t+l^2} - 1\right)
+\end{align*}
+\subsubsection{Leading Divergence in $u_1$}
+
+This expression can be greatly cleaned up by the subsitution, $w = \frac{y}{\sqrt{s+l^2}}$ giving
+\[u_1(x, t) = \frac{m_0}{4\pi}\int_0^t \frac{ds}{s+l^2} \int_{-1}^{1} dw
+\frac{e^{-\frac{(x-\sqrt{s+l^2}w)^2}{2(t-s)}}}{\sqrt{t-s}}e^{-w^2/2}
+\left(w^2 - 1\right). \]
+Examining this term for divergences, it appears that for $l\to 0$ the only divergence is a
+logarithmic one at small s.  We may thus set $l$ to 0 in all terms past the $\frac{1}{s+l^2}$,
+\[u_1(x, t) \approx \frac{m_0}{4\pi}\int_0^t \frac{ds}{s+l^2} \int_{-1}^{1} dw\,
+\frac{e^{-\frac{(x-\sqrt{s}w)^2}{2(t-s)}}}{\sqrt{t-s}}e^{-w^2/2}
+\left(w^2 - 1\right). \]
+Similarly, as the divergence occurs for $s\to 0$, we may set all $s$ terms to the right of the
+logarithmic divergence to 0, leaving the leading singular contribution,
+\[u_1(x, t) \approx \frac{e^{-\frac{x^2}{2t}}}{\sqrt{t}}\frac{m_0}{4\pi}\int_0^t \frac{ds}{s+l^2} \int_{-1}^{1} dw\,
+e^{-w^2/2}\left(w^2 - 1\right). \]
+A substitution of $w^2 = t$ and integration by parts on the last integral yields
+\[2\int_{0}^{1} dw\,e^{-w^2/2}\left(w^2 - 1\right) = -\frac{2}{\sqrt{e}} \]
+and the integral over $s$ in the limit $l\to 0$ gives the logarithmic term,
+\[\int_0^t \frac{ds}{s+l^2} = \log\left(\frac{t}{l^2}\right). \]
+To first order in $\epsilon$ our solution is thus,
+\[u(x, t)  = \frac{m_0}{\sqrt{2\pi t}} e^{\frac{-x^2}{2t}} \left[1 - 
+\frac{\epsilon}{\sqrt{2\pi e}}\log\left(\frac{t}{l^2}\right) + O(\epsilon^2) \right] + O(l,\epsilon)\]
+
+\subsubsection{Perturbative Renormalisation}
+We expand $Z$ in $\epsilon$, $Z = 1 + \sum_n z_n(l/\mu) \epsilon^n$.  Recalling $m(0) = Zm(t)$,
+we insert this into our solution to obtain, keeping terms to order $\epsilon$,
+\begin{align*}
+u(x, t) =& \frac{m(t)}{\sqrt{2\pi t}} e^{\frac{-x^2}{2t}} \left[1 + \epsilon z_1 +...\right]
+\times \left[ 1  - \frac{\epsilon}{\sqrt{2\pi e}}\log\left(\frac{t}{l^2}\right) + O(\epsilon^2) \right] \\
+=&\frac{m(t)}{\sqrt{2\pi t}} e^{\frac{-x^2}{2t}} \left[ 1 + \epsilon 
+\left(z_1 - \frac{1}{\sqrt{2\pi e}} \log \left(\frac{t}{l^2}\right)\right) + ... \right]
+\end{align*}
+Evidently, by choosing $z_1 = \frac{1}{\sqrt{2\pi e}} \log \left(C_1 \frac{\mu^2}{l^2}\right)$ we
+will cancel the singular dependence on $l$ in our solution.
+
+\subsubsection{Calculating the Anomalous Dimension}
+
+At this point we can use the previously defined relationship,
+\(\d{\log Z}{\log \mu} = 2\alpha \) to calculate the anomalous dimension.
+\[\log Z = \log\left(1 + \frac{\epsilon}{\sqrt{2\pi e}} \log \left(C_1\frac{\mu^2}{l^2}\right) + ... \right) \approx \frac{2\epsilon}{\sqrt{2\pi e}}\log \mu + ..\]
+and we have confirmed our earlier heuristic derivation $\alpha = \frac{\epsilon}{\sqrt{2\pi e}} + O(\epsilon^2)$
+without the use of an ad hoc solution form.
+
+\section{Wrapping Up}
+
+After seeing traditional dimensional analysis fail to give appropriate forms for solutions
+of certain problems, we discovered that the problem was a singular limit in our scaling form.
+By introducing a renormalization parameter and using it to absorb the dependence of our
+troublesome parameter we are able to calculate the degree of the singularity and extract
+the long term behavior of the system.  Here we see that the flow in time which takes many initial
+conditions to single 'fixed point' asymptotic solutions is exactly analogous to the application
+of renormalization to thermal problems.
+
+\bibliography{asymptotics}
 \end{document}
